@@ -1,11 +1,11 @@
 import csv
 import pprint
 from datetime import datetime
+import csv 
 
 def analyseRow(row):
     if row[3]=="日":
         datetime_object = datetime.strptime(row[5], '%H:%M')
-        print('datetime_object',row[5],datetime_object.hour <= 19)
         if datetime_object.hour <= 21:
             return ['Sun','Weekend']
         else:
@@ -48,6 +48,18 @@ with open('台風の動向.csv') as f:
             if row[4] == '沖縄':
                 dicts_okinawa[array[0]] += 1
                 dicts_weekend_okinawa[array[1]] += 1
+    with open('results.csv', 'w') as file:
+        writer = csv.writer(file)
+        writer.writerow(dicts.keys())
+        writer.writerow(dicts.values())
+        writer.writerow(dicts_from2017.values())
+        writer.writerow(dicts_weekend_okinawa.values())
+
+        writer.writerow(dicts_weekend.keys())
+        writer.writerow(dicts_weekend.values())
+        writer.writerow(dicts_weekend_from2017.values())
+        writer.writerow(dicts_weekend_okinawa.values())
+        
     print("dicts",dicts)
     print("dicts_weekend",dicts_weekend)
     print("dicts_from2017",dicts_from2017)
